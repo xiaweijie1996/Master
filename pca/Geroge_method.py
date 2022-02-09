@@ -1,11 +1,18 @@
-import pickle
+# import pickle
 import numpy as np
 import pandas as pd
 
-load_data = open(r'../data_after_process_weekday.pickle','rb')
-data_weekday = pickle.load(load_data)
+# load_data = open(r'../data_after_process_weekday.pickle','rb')
+# data_weekday = pickle.load(load_data)
 
 def rearrange_order_data(data):
+    """
+    Input: a dictionary, the key is the number of smart meter
+    Output: a dictionary, but with index of each time slot for each sample
+    The table is sorted from larg value to small value
+    
+    """
+    
     "add index to every time slot"
     for x in range(len(data)):
         array_1 = np.arange(len(data[x])).reshape((len(data[x]),1))

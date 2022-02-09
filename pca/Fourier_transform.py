@@ -1,14 +1,23 @@
-import pickle
 from scipy.fftpack import fft,ifft
 import numpy as np
 import copy
 # import matplotlib.pyplot as plt
 # from matplotlib.pylab import mpl
-
-load_data = open(r'../data_after_process_weekday.pickle','rb')
-data_weekday = pickle.load(load_data)
+# import pickle
+# load_data = open(r'../data_after_process_weekday.pickle','rb')
+# data_weekday = pickle.load(load_data)
 
 def FFT(data,n=0):
+    
+    """
+    Input: a series of data, number of repeated times
+    Output: 
+    repeated data,
+    comples number,
+    length of complex number, 振幅
+    相位
+    """
+    
     "reinforce the data"
     re_data1 = copy.deepcopy(data)
     re_data = copy.deepcopy(data)
