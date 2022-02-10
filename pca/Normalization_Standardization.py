@@ -1,7 +1,8 @@
 import pickle
 import numpy as np
-# import pandas as pd
-
+import pandas as pd
+import matplotlib.pyplot as plt
+import matplotlib as mpl
 # load_data = open(r'../data_after_process_weekday.pickle','rb')
 # data_weekday = pickle.load(load_data)
 # dataaa = data_weekday
@@ -27,18 +28,52 @@ class stand_normal_reverse:
 
 
 def merge_dict(dict_data,n):
+    "change dictionary to matrix"
     data = np.empty(shape=(len(dict_data[0]),1))
     for i in range(len(dict_data)):
         or_data = np.array(dict_data[i])[:,n].reshape(len(data),1)
         data = np.hstack((data,or_data))            
     return np.transpose(data[:,1:])
             
+def count_ave_in_dict(matrix,class_vector,number_clusters):
+    "generate matrix"
+    """
+    Matrix: original data 
+    class_vector: km_selection.labels_
+    number_cluster: int, number of clusters
 
-# c=merge_dict(data_weekday,1)
+    """
+    out_dicit = {}
+    out_matrix = np.zeros((number_clusters,np.shape(matrix)[1]))
+    for i in range(number_clusters):   
+        empty = np.empty(shape=(0,np.shape(matrix)[1]))
+        for ii in range(len(class_vector)):
+            if class_vector[ii] == i:
+                out_matrix[i] = matrix[ii,:] + out_matrix[i]
+                empty = np.vstack((empty,matrix[ii,:]))
+        out_dicit[i] = empty  
+    "divide number of smaters in each cluster"
+    k_count = pd.value_counts(class_vector)     
+    for i in range(len(k_count)):
+        for ii in range(len(out_matrix)):
+            if i == ii:
+                out_matrix[ii,:] = out_matrix[ii,:]/k_count[i]
+    return out_matrix,out_dicit
+
+def draw_graph_km(matrix_ave,dict_cluster):
+    for i in range(len(matrix_ave)):
+        for ii in range(len(dict_cluster[i])):
+            plt.plot(dict_cluster[i][ii,:],  alpha=.15, color='black')
+        title = 'Consumption profile of '+str(i)+ ' '+str(max(dict_cluster))+'clusters'
+        plt.title(title)
+        plt.plot(matrix_ave[i], color='red')
+        plt.show()
+# # c=merge_dict(data_weekday,1)
 # n=1
 # dict_data = data_weekday
 # data = np.empty(shape=(len(dict_data[0]),1))
 # # for i in range(len(dict_data)):
 # for i in [0]:
-#         or_data = np.array(dict_data[i][:,n]).reshape(len(data),1)
-#         data = np.hstack((data,or_data)) 
+# or_data = np.array(dict_data[i][:,n]).reshape(len(data),1)
+# data = np.hstack((data,or_data)) 
+

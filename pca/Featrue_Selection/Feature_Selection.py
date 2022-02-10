@@ -20,20 +20,20 @@ def feature_selection(data):
         df = pd.DataFrame(data[x])
         dff = df.sort_values(by=2,ascending=False)
         
-        "find minmum vaule and position"
-        max_v = dff.iloc[0,2]
-        max_index = dff.iloc[0,0]/1000
+        # "find minmum vaule and position"
+        # max_v = dff.iloc[0,2]
+        # max_index = dff.iloc[0,0]/1000
    
-        "find maxmum vaule and position"
-        min_v = dff.iloc[-1,2]
-        min_index = dff.iloc[-1,0]/1000
+        # "find maxmum vaule and position"
+        # min_v = dff.iloc[-1,2]
+        # min_index = dff.iloc[-1,0]/1000
         
-        "combine data"
-        n = len(data[x])
-        df.loc[n] = [n,0,max_v]
-        df.loc[n+1] = [n+1,0,max_index ]
-        df.loc[n+2] = [n+2,0,min_v]
-        df.loc[n+3] = [n+3,0,min_index]
+        # "combine data"
+        # n = len(data[x])
+        # df.loc[n] = [n,0,max_v]
+        # df.loc[n+1] = [n+1,0,max_index ]
+        # df.loc[n+2] = [n+2,0,min_v]
+        # df.loc[n+3] = [n+3,0,min_index]
         data[x] = df
         
     return data 
