@@ -34,6 +34,14 @@ def merge_dict(dict_data,n):
         or_data = np.array(dict_data[i])[:,n].reshape(len(data),1)
         data = np.hstack((data,or_data))            
     return np.transpose(data[:,1:])
+
+def merge_dict_ft(dict_data,n):
+    "change dictionary to matrix"
+    data = np.empty(shape=(len(dict_data[0]),0))
+    for i in range(len(dict_data)):
+        or_data = np.array(dict_data[i]).reshape(len(data),1)
+        data = np.hstack((data,or_data))            
+    return np.transpose(data[:,1:])
             
 def count_ave_in_dict(matrix,class_vector,number_clusters):
     "generate matrix"
@@ -41,6 +49,8 @@ def count_ave_in_dict(matrix,class_vector,number_clusters):
     Matrix: original data 
     class_vector: km_selection.labels_
     number_cluster: int, number of clusters
+    
+    Used in Feature_Selection
 
     """
     out_dicit = {}
@@ -61,19 +71,27 @@ def count_ave_in_dict(matrix,class_vector,number_clusters):
     return out_matrix,out_dicit
 
 def draw_graph_km(matrix_ave,dict_cluster):
+    """
+    matrix_ave: AVE value 
+    dict_cluster: 
+    
+    Used in Feature_Selection, G
+    """
     for i in range(len(matrix_ave)):
         for ii in range(len(dict_cluster[i])):
-            plt.plot(dict_cluster[i][ii,:],  alpha=.15, color='black')
+            plt.plot(dict_cluster[i][ii,:],  alpha=.1, color='black')
         title = 'Consumption profile of '+str(i)+ ' '+str(max(dict_cluster))+'clusters'
         plt.title(title)
         plt.plot(matrix_ave[i], color='red')
         plt.show()
-# # c=merge_dict(data_weekday,1)
-# n=1
-# dict_data = data_weekday
-# data = np.empty(shape=(len(dict_data[0]),1))
-# # for i in range(len(dict_data)):
-# for i in [0]:
-# or_data = np.array(dict_data[i][:,n]).reshape(len(data),1)
-# data = np.hstack((data,or_data)) 
+
+def trace_original_data_g(matrix_data,matrix_labels,n):
+    dicit_ordered_g = {}
+    for i in range(n):
+        empty = np.empty((0,np.shape(matrix_data)[1]))
+        for ii in range(len(matrix_labels)):
+            if matrix_labels[ii] == i:
+                empty = np.vstack((empty,matrix_data))
+            dicit_ordered_g[i] = empty
+    return dicit_ordered_g
 
